@@ -6,13 +6,15 @@
 			{% block title %}Wonder
 			{% endblock %}
 		</title>
-		<link rel="icon" href="{{ asset('images/favicon.png')}}"> {% block stylesheets %}{% endblock %}
+<link rel="icon" href="{{ asset('build/images/favicon.png') }}">
+
+		{% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+		{% endblock %}
 
 		{% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
 			<script src="https://kit.fontawesome.com/26b2a5bc8a.js" crossorigin="anonymous"></script>
-			{% block importmap %}
-				{{ importmap('app') }}
-			{% endblock %}
 		{% endblock %}
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
