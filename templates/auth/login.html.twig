@@ -27,10 +27,19 @@
 			{% endif %}
 
 			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-			<button class="btn btn-primary mr-10" type="submit">Connexion</button>
-			<small>
-				<a href="{{ path('inscription') }}">Vous n'avez pas de compte ?</a>
-			</small>
+			<div class="d-flex align-items-center">
+				<div>
+					<button class="btn btn-primary mr-10" type="submit">Connexion</button>
+				</div>
+				<div class="d-flex flex-column">
+					<small class="m-5">
+						<a href="{{ path('inscription') }}">Vous n'avez pas de compte ?</a>
+					</small>
+					<small class="m-5">
+						<a href="{{ path('reset-password-request') }}">Mot de passe oublié ?</a>
+					</small>
+				</div>
+			</div>
 		</form>
 	</div>
 {% endblock %}
