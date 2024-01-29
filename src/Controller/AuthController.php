@@ -8,6 +8,7 @@ use App\Entity\ResetPassword;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ResetPasswordRepository;
+use App\Service\Uploader;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -33,13 +34,17 @@ class AuthController extends AbstractController
     }
 
     #[Route('/inscription', name: 'inscription')]
-    public function inscription(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, UserAuthenticatorInterface $userAuthenticatorInterface, MailerInterface $mailerInterface): Response
+    public function inscription(Uploader $uploader ,Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, UserAuthenticatorInterface $userAuthenticatorInterface, MailerInterface $mailerInterface): Response
     {
         $user = new User();
         $userForm = $this->createForm(UserType::class, $user);
         $userForm->handleRequest($request);
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
+
+            $picture = $userForm->get('pictureFile')->getData();
+            $user->setPicture($uploader->uploadProfileImage($picture));
+
             $hash = $passwordHasher->hashPassword($user, $user->getPassword());
             $user->setPassword($hash);
             $em->persist($user);
