@@ -6,5 +6,6 @@
  * which should already be in your base.html.twig.
  */
 import './styles/app.scss';
+import './scripts/header';
 
 console.log('This log comes from assets/app.ts - welcome to AssetMapper! 🎉');
