@@ -3,12 +3,17 @@
 		<a class="header-logo" href="{{ path('home') }}">
 			<img src="{{ asset('build/images/logo.svg')}}">
 		</a>
-		<div class="header-search p-10 flex-fill">
-			<i class="fa-solid fa-search"></i>
-			<input type="text">
+		<div id="search" class="header-search p-10 flex-fill d-flex flex-row align-items-center">
+			<i class="fa-solid fa-search mr-10"></i>
+			<input @input="updateInput" ref="input" type="text" class="flex-fill">
+			<img v-if="isLoading" src="{{ asset('build/images/loading.gif') }}" class="header-search-loading">
+			<ul class="header-search-result d-flex flex-column" v-if="questions?.length">
+				<a v-for="question in questions" :key="question.id" v-bind:href="'/question/' + question.id">${ question.title }$</a>
+			</ul>
 		</div>
+
 		{%- if is_granted('ROLE_USER') -%}
-			<div class="d-flex flow-row-nowrap justify-content-center">
+			<div class="d-flex flow-row-nowrap justify-content-center hide-xs">
 				<a href="{{ path('current_user')}}">
 					<img src="{{ app.user.picture}}" class="avatar avatar-lg mr-10">
 				</a>
@@ -17,10 +22,22 @@
 				</small>
 			</div>
 		{% else %}
-			<div>
+			<div class='hide-xs'>
 				<a href="{{ path ('inscription') }}" class="btn btn-primary mr-5">Inscription</a>
 				<a href="{{ path ('login') }}" class="btn btn-primary-stroke">Connexion</a>
 			</div>
 		{% endif %}
+		<div class="show-xs burger">
+			<i class="fa-solid fa-bars"></i>
+		</div>
 	</div>
 </header>
+<div class="menu-xs d-flex flex-column hidden">
+	{%- if is_granted('ROLE_USER') -%}
+		<a href="{{ path('current_user')}}">
+			<a href="{{ path('logout')}}">Déconnexion</a>
+		{% else %}
+			<a href="{{ path ('inscription') }}" class="btn btn-primary mr-5">Inscription</a>
+			<a href="{{ path ('login') }}" class="btn btn-primary-stroke">Connexion</a>
+		{%- endif -%}
+	</div>

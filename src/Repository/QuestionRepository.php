@@ -21,50 +21,62 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-    public function getLastQuestionWithAuthors(){
+    public function getLastQuestionWithAuthors()
+    {
         return $this->createQueryBuilder('q')
-                    ->leftJoin('q.author','a')
-                    ->addSelect('a')
-                    ->orderBy('q.createdAt','DESC')
-                    ->getQuery()
-                    ->getResult();
+            ->leftJoin('q.author', 'a')
+            ->addSelect('a')
+            ->orderBy('q.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
-    public function getQuestionsWithCommentsAndAuthors(int $id) : Question {
+    public function getQuestionsWithCommentsAndAuthors(int $id): Question
+    {
         return $this->createQueryBuilder('q')
-                    ->andWhere('q.id = :id')
-                    ->setParameter('id',$id)
-                    ->leftJoin('q.author','a')
-                    ->addSelect('a')
-                    ->leftJoin('q.comments','c')
-                    ->addSelect('c')
-                    ->leftJoin('c.author','ca')
-                    ->addSelect('ca')
-                    ->getQuery()
-                    ->getOneOrNullResult();
+            ->andWhere('q.id = :id')
+            ->setParameter('id', $id)
+            ->leftJoin('q.author', 'a')
+            ->addSelect('a')
+            ->leftJoin('q.comments', 'c')
+            ->addSelect('c')
+            ->leftJoin('c.author', 'ca')
+            ->addSelect('ca')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
-//    /**
-//     * @return Question[] Returns an array of Question objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('q')
-//            ->andWhere('q.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('q.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-//    public function findOneBySomeField($value): ?Question
-//    {
-//        return $this->createQueryBuilder('q')
-//            ->andWhere('q.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findBySearch(string $query)
+    {
+        return $this->createQueryBuilder('q')
+            ->select('q.title,q.id')
+            ->where('q.title LIKE :search')
+            ->setParameter('search', "%{$query}%")
+            ->getQuery()
+            ->getResult();
+    }
+    //    /**
+    //     * @return Question[] Returns an array of Question objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('q')
+    //            ->andWhere('q.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('q.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Question
+    //    {
+    //        return $this->createQueryBuilder('q')
+    //            ->andWhere('q.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
