@@ -8,7 +8,7 @@
 			<input type="text">
 		</div>
 		{%- if is_granted('ROLE_USER') -%}
-			<div class="d-flex flow-row-nowrap justify-content-center">
+			<div class="d-flex flow-row-nowrap justify-content-center hide-xs">
 				<a href="{{ path('current_user')}}">
 					<img src="{{ app.user.picture}}" class="avatar avatar-lg mr-10">
 				</a>
@@ -17,10 +17,22 @@
 				</small>
 			</div>
 		{% else %}
-			<div>
+			<div class='hide-xs'>
 				<a href="{{ path ('inscription') }}" class="btn btn-primary mr-5">Inscription</a>
 				<a href="{{ path ('login') }}" class="btn btn-primary-stroke">Connexion</a>
 			</div>
 		{% endif %}
+		<div class="show-xs burger">
+			<i class="fa-solid fa-bars"></i>
+		</div>
 	</div>
 </header>
+<div class="menu-xs d-flex flex-column hidden">
+	{%- if is_granted('ROLE_USER') -%}
+		<a href="{{ path('current_user')}}">
+		<a href="{{ path('logout')}}">Déconnexion</a>
+	{% else %}
+		<a href="{{ path ('inscription') }}" class="btn btn-primary mr-5">Inscription</a>
+		<a href="{{ path ('login') }}" class="btn btn-primary-stroke">Connexion</a>
+	{%- endif -%}
+</div>

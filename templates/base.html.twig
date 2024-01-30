@@ -2,9 +2,9 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=devise-width,initial-scale=1.0">
 		<title>
-			{% block title %}Wonder
-			{% endblock %}
+			{% block title %}Wonder{% endblock %}
 		</title>
 		<link rel="icon" href="{{ asset('build/images/favicon.png') }}">
 
@@ -31,7 +31,7 @@
 		{% endfor %}
 
 		<div class="app-content flex-fill d-flex flex-row-nowrap justify-content-center">
-			<div class="content d-flex flex-row-nowrap flex-fill py-50">
+			<div class="content-main content d-flex flex-row-nowrap flex-fill flex-column-xs">
 				{{ include('partials/_sidebar.html.twig') }}
 				<div class="flex-fill">
 					{% block body %}Contenu
