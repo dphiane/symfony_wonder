@@ -27,7 +27,8 @@ Voici ma première web application Symfony. Il s'agit d'une imitation du site Qu
    - `composer install`
    - `npm install` ou `yarn install`
    - `npm run build` ou `yarn run build`
-3. Configurez le fichier `.env` :
+3. Importer les données qui sont dans le dossier wonder qui contient les fichiers sql
+4. Configurez le fichier `.env` :
    - Décommentez la ligne suivante si vous utilisez une base de données MySQL, et remplacez les informations comme le nom d'utilisateur, le mot de passe, le nom du schéma :
      ```
      DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8.0.32&charset=utf8mb4"
@@ -43,4 +44,4 @@ Voici ma première web application Symfony. Il s'agit d'une imitation du site Qu
      ```
    - Vous pouvez utiliser le mailer Mailtrap qui est gratuit.
      
-4. Lancez le serveur avec la commande : symfony serve -d
+5. Lancez le serveur avec la commande : symfony serve -d
